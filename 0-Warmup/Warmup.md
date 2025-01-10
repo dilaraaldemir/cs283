@@ -11,8 +11,8 @@ Select with an x the platform you will be using for your course deliverables:
 
 I have installed my virtual machine, tested it, feel comfortable using it, and validated that the required software is installed:
 
-- [x] YES
-- [] N/A - I plan to use tux
+- [] YES
+- [x] N/A - I plan to use tux
 - [] NO - Not Yet
 
 Please provide a link to the repository you are using for this class.
