@@ -149,28 +149,30 @@ void replace_word(char *buff, int len, char *search, char *replace) {
     char temp[len];
     char *src = buff;
     char *dst = temp;
-    int search_len = 0;
-    int replace_len = 0;
-
-    while (search[search_len] != '\0') search_len++;
-    while (replace[replace_len] != '\0') replace_len++;
+    int search_len = strlen(search);
+    int replace_len = strlen(replace);
 
     while (src < buff + len && *src != '\0') {
         if (strncmp(src, search, search_len) == 0) {
-            for (int i = 0; i < replace_len; i++) {
-                *dst++ = replace[i];
+            // Check if replacing would overflow the buffer
+            if ((dst - temp + replace_len) >= len) {
+                printf("Error: Replacement string would overflow the buffer.\n");
+                return;
             }
+            strncpy(dst, replace, replace_len);
+            dst += replace_len;
             src += search_len;
         } else {
             *dst++ = *src++;
         }
     }
 
-    *dst = '\0';
-    int modified_len = dst - temp;
-    memcpy(buff, temp, modified_len);
-    buff[modified_len] = '\0';
+    *dst = '\0'; // Null-terminate the buffer
+    strncpy(buff, temp, len); // Copy modified buffer back
+    buff[len - 1] = '\0'; // Ensure null-termination within buffer size
 }
+
+
 
 int main(int argc, char *argv[]){
 
@@ -242,7 +244,7 @@ int main(int argc, char *argv[]){
     	    print_words(buff, user_str_len);
     	    break;
 	case 'x':
-	    if (argc <= 5) {
+	    if (argc <= 4) {
             	printf("Not Implemented!\n");
             	break;
             }
